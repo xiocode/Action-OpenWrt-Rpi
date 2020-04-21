@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: Build Raspberry Pi 4 Lean's OpenWrt
+name: Build Raspberry Pi 3 Lean's OpenWrt
 
 on: 
   release:
@@ -15,7 +15,7 @@ on:
     branches: 
       - master
     paths:
-      - 'rpi4-lean-openwrt.config'
+      - 'rpi3-lean-openwrt.config'
     # schedule:
     #   - cron: 0 18 * * *
     # watch:
@@ -24,13 +24,13 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: rpi4-lean-openwrt.config
+  CONFIG_FILE: rpi3-lean-openwrt.config
   DIY_SH: lean-openwrt.sh
   DOWNLOAD_URL_FILE: Tmp-Link-Url.txt
   TZ: Asia/Shanghai
   TARGET: bcm27xx
-  SUBTARGET: bcm2711
-  DEVICE: openwrt-bcm27xx-bcm2711-rpi-4
+  SUBTARGET: bcm2710
+  DEVICE: openwrt-bcm27xx-bcm2710-rpi-3
   FREE_UP_DISK: true
   SSH_ACTIONS: false
   UPLOAD_EXT4_IMAGES: true
@@ -85,10 +85,8 @@ jobs:
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_SH
-        chmod +x enable-rpi4-wifi.sh
         cd openwrt
         ../$DIY_SH
-        ../enable-rpi4-wifi.sh
         make defconfig
 
     - name: Bind Folders
